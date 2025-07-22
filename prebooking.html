@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventory System Pre-Booking</title>
+  <style>
+    body {
+      background: url('https://media.istockphoto.com/id/1295904711/photo/factory-engineer-hold-tablet-manage-inventory-control-and-delivery-smart-transportation.jpg?s=2048x2048&w=is&k=20&c=MoszBHF0AhGdDeEgTTTF0eYf6hjOG6ED95MHhf5r_64=') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 80px auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      text-align: center;
+      color: #4e342e;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .checkbox-group {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .checkbox-group input {
+      margin-right: 10px;
+    }
+
+    button {
+      width: 100%;
+      background-color: #6d4c41;
+      color: white;
+      padding: 12px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #5d4037;
+    }
+
+    #msg {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .green-text { color: green; }
+    .red-text { color: red; }
+
+    .loader {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #6d4c41;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .message-box {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .message-box-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 10px;
+      text-align: center;
+      position: relative;
+    }
+
+    .message-box-close {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .message-box-close:hover,
+    .message-box-close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Inventory System Pre-Booking</h1>
+
+  <form id="preBookingForm">
+    <input type="text" name="business_name" placeholder="Company / Industry / Business Name *" required />
+    <input type="text" name="user_name" placeholder="Your Name *" required />
+    <input type="email" name="user_mail" placeholder="Your Email *" required />
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="demo_interest" name="demo_interest" />
+      <label for="demo_interest">Interested to see demo</label>
+    </div>
+
+    <button type="submit">Pre-Book Now</button>
+  </form>
+
+  <div class="loader" id="loaderBox">
+    <div class="spinner"></div>
+    <p>Please wait...</p>
+  </div>
+
+  <div id="messageBox" class="message-box">
+    <div class="message-box-content">
+      <span class="message-box-close">&times;</span>
+      <p id="messageBoxText"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showMessageBox(message, isSuccess) {
+    const messageBox = document.getElementById("messageBox");
+    const messageBoxText = document.getElementById("messageBoxText");
+    messageBoxText.textContent = message;
+    messageBoxText.style.color = isSuccess ? "green" : "red";
+    messageBox.style.display = "flex"; 
+
+    const closeButton = document.querySelector(".message-box-close");
+    closeButton.onclick = function() {
+      messageBox.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == messageBox) {
+        messageBox.style.display = "none";
+      }
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("preBookingForm");
+    const loaderBox = document.getElementById("loaderBox");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault(); 
+
+      
+      const businessName = form.business_name.value.trim();
+      const userName = form.user_name.value.trim();
+      const email = form.user_mail.value.trim();
+      const wantsDemo = form.demo_interest.checked;
+
+      if (!businessName || !userName || !email) {
+        showMessageBox("All required fields must be filled!", false);
+        return; 
+      }
+
+      loaderBox.style.display = "block"; 
+
+      try {
+        const response = await fetch('http://localhost:5000/api/prebooking', {
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json' 
+          },
+          body: JSON.stringify({ 
+            businessName: businessName,
+            userName: userName,
+            email: email,
+            wantsDemo: wantsDemo
+          })
+        });
+
+        const data = await response.json(); 
+
+        if (response.ok) { 
+          loaderBox.style.display = "none"; 
+          showMessageBox(data.message || `Pre-booking successful${wantsDemo ? " — we'll send you a demo soon!" : "!"}`, true);
+          form.reset(); 
+        } else {
+          loaderBox.style.display = "none";
+          showMessageBox(data.message || "Error submitting pre-booking. Please try again.", false);
+          console.error("Backend error:", data);
+        }
+      } catch (error) {
+        loaderBox.style.display = "none";
+        console.error("Network or fetch error:", error);
+        showMessageBox("Could not connect to the server. Please check your internet connection or try again later.", false);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
