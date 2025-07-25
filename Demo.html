@@ -53,36 +53,49 @@
     .mySlides {
       display: none; 
       width: 100%;
+      /* Set a fixed height for all slides to prevent layout shifts */
+      height: 450px; /* Adjust this value as needed for your images */
       border-radius: 12px;
       animation: fadeEffect 1.5s; 
+      display: flex; /* Use flexbox to center image vertically */
+      justify-content: center;
+      align-items: center;
+      background-color: #f0f0f0; /* Placeholder background if image doesn't fill */
     }
     .mySlides img {
       width: 100%;
-      height: auto;
+      height: 100%; /* Make image fill the fixed height of the slide */
+      object-fit: contain; /* 'contain' will scale the image down to fit, 'cover' will crop to fill */
       border-radius: 12px;
     }
+    /* Styles for the navigation buttons (prev/next) - now outside the container */
     .prev, .next {
       cursor: pointer;
-      position: absolute;
-      top: 50%;
       width: auto;
-      padding: 16px;
-      margin-top: -22px;
+      padding: 10px 15px; /* Adjusted padding for button-like appearance */
       color: white;
       font-weight: bold;
       font-size: 18px;
       transition: 0.6s ease;
-      border-radius: 0 3px 3px 0;
+      border-radius: 8px; /* Rounded corners for buttons */
       user-select: none;
-      background-color: rgba(0,0,0,0.5);
-    }
-    .next {
-      right: 0;
-      border-radius: 3px 0 0 3px;
+      background-color: var(--slate-blue); /* Use theme color */
+      display: inline-block; /* Ensure they behave like buttons */
+      text-align: center;
+      text-decoration: none;
     }
     .prev:hover, .next:hover {
-      background-color: rgba(0,0,0,0.8);
+      background-color: var(--deep-blue); /* Darker on hover */
     }
+
+    /* Container for navigation buttons - positioned below the slideshow */
+    .slideshow-nav-controls {
+        display: flex;
+        justify-content: center;
+        gap: 20px; /* Space between buttons */
+        margin-top: 20px; /* Space below slideshow */
+    }
+
     .text {
       color: #f2f2f2;
       font-size: 15px;
@@ -156,14 +169,19 @@
       .section-subheading {
         font-size: 1rem;
       }
+      /* Adjust prev/next button size for mobile */
       .prev, .next {
         font-size: 16px;
-        padding: 10px;
+        padding: 8px 12px;
       }
       .slideshow-container {
         max-width: 100%;
         border-radius: 0;
         box-shadow: none;
+      }
+      .mySlides {
+        height: 300px; /* Adjusted height for mobile */
+        border-radius: 0;
       }
       .mySlides img {
         border-radius: 0;
@@ -206,7 +224,6 @@
         <a href="index.html" class="hover:underline">Home</a>
         <a href="index.html#about" class="hover:underline">About</a>
         <a href="index.html#services" class="hover:underline">Services</a>
-        <a href="index.html#contact" class="hover:underline">Contact</a>
         <a href="prebooking.html" class="hover:underline">Pre Booking</a>
         <a href="demo.html" class="hover:underline">Demo</a>
         <!-- Search Icon -->
@@ -225,7 +242,6 @@
         <a href="index.html">Home</a>
         <a href="index.html#about">About</a>
         <a href="index.html#services">Services</a>
-        <a href="index.html#contact">Contact</a>
         <a href="prebooking.html">Pre Booking</a>
         <a href="demo.html">Demo</a>
         <!-- Search Icon for Mobile -->
@@ -244,121 +260,95 @@
 
         <div class="slideshow-container">
           <div class="mySlides fade">
-            <div class="numbertext">1 / 19</div>
+            <div class="numbertext">1 / 17</div>
             <img src="https://i.ibb.co/rf1ShPjN/Whats-App-Image-2025-07-04-at-8-07-18-PM-1.jpg" alt="Inventory System Screenshot 1">
-            <div class="text">Screenshot 1</div>
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">2 / 19</div>
+            <div class="numbertext">2 / 17</div>
             <img src="https://i.ibb.co/PG9r0XLP/Whats-App-Image-2025-07-04-at-8-07-19-PM.jpg" alt="Inventory System Screenshot 2">
-            <div class="text">Screenshot 2</div>
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">3 / 19</div>
+            <div class="numbertext">3 / 17</div>
             <img src="https://i.ibb.co/k6sPhRRS/Whats-App-Image-2025-07-04-at-8-07-17-PM.jpg" alt="Inventory System Screenshot 3">
-            <div class="text">Screenshot 3</div>
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">4 / 19</div>
+            <div class="numbertext">4 / 17</div>
             <img src="https://i.ibb.co/zWxFyV01/Whats-App-Image-2025-07-04-at-8-07-18-PM.jpg" alt="Inventory System Screenshot 4">
-            <div class="text">Screenshot 4</div>
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">5 / 19</div>
+            <div class="numbertext">5 / 17</div>
             <img src="https://i.ibb.co/VWcNBb4m/Whats-App-Image-2025-07-04-at-8-07-21-PM.jpg" alt="Inventory System Screenshot 5">
-            <div class="text">Screenshot 5</div>
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">6 / 19</div>
+            <div class="numbertext">6 / 17</div>
             <img src="https://i.ibb.co/wNLNSPVj/Whats-App-Image-2025-07-04-at-8-07-20-PM.jpg" alt="Inventory System Screenshot 6">
-            <div class="text">Screenshot 6</div>
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">7 / 19</div>
+            <div class="numbertext">7 / 17</div>
             <img src="https://i.ibb.co/35FfC0rM/Screenshot-2025-07-21-134639.png" alt="Inventory System Screenshot 7">
-            <div class="text">Screenshot 7</div>
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">8 / 19</div>
-            <img src="https://i.ibb.co/Tx5rjpzz/Screenshot-2025-07-21-140050.png" alt="Inventory System Screenshot 8">
-            <div class="text">Screenshot 8</div>
+            <div class="numbertext">8 / 17</div>
+            <img src="https://i.ibb.co/23p2W52X/Screenshot-2025-07-21-134632.png" alt="Inventory System Screenshot 8">
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">9 / 19</div>
-            <img src="https://i.ibb.co/23p2W52X/Screenshot-2025-07-21-134632.png" alt="Inventory System Screenshot 9">
-            <div class="text">Screenshot 9</div>
+            <div class="numbertext">9 / 17</div>
+            <img src="https://i.ibb.co/0ysxQsGK/Screenshot-2025-07-21-134603.png" alt="Inventory System Screenshot 9">
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">10 / 19</div>
-            <img src="https://i.ibb.co/0ysxQsGK/Screenshot-2025-07-21-134603.png" alt="Inventory System Screenshot 10">
-            <div class="text">Screenshot 10</div>
+            <div class="numbertext">10 / 17</div>
+            <img src="https://i.ibb.co/7NrpKkdC/Screenshot-2025-07-21-134716.png" alt="Inventory System Screenshot 10">
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">11 / 19</div>
-            <img src="https://i.ibb.co/7NrpKkdC/Screenshot-2025-07-21-134716.png" alt="Inventory System Screenshot 11">
-            <div class="text">Screenshot 11</div>
+            <div class="numbertext">11 / 79</div>
+            <img src="https://i.ibb.co/7JKhxpJg/Screenshot-2025-07-21-135919.png" alt="Inventory System Screenshot 11">
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">12 / 19</div>
-            <img src="https://i.ibb.co/7JKhxpJg/Screenshot-2025-07-21-135919.png" alt="Inventory System Screenshot 12">
-            <div class="text">Screenshot 12</div>
+            <div class="numbertext">12 / 17</div>
+            <img src="https://i.ibb.co/dsjf2fWQ/Screenshot-2025-07-21-140251.png" alt="Inventory System Screenshot 12">
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">13 / 19</div>
-            <img src="https://i.ibb.co/dsjf2fWQ/Screenshot-2025-07-21-140251.png" alt="Inventory System Screenshot 13">
-            <div class="text">Screenshot 13</div>
-          </div>
-
-          <div class="mySlides fade">
-            <div class="numbertext">14 / 19</div>
+            <div class="numbertext">13 / 17</div>
             <img src="https://i.ibb.co/fdZKDx9m/Screenshot-2025-07-21-134621.png" alt="Inventory System Screenshot 14">
-            <div class="text">Screenshot 14</div>
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">15 / 19</div>
-            <img src="https://i.ibb.co/99QVjNW3/Screenshot-2025-07-21-135941.png" alt="Inventory System Screenshot 15">
-            <div class="text">Screenshot 15</div>
+            <div class="numbertext">14 / 17</div>
+            <img src="https://i.ibb.co/n8L1mBRw/Screenshot-2025-07-21-154407.png" alt="Inventory System Screenshot 14">
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">16 / 19</div>
-            <img src="https://i.ibb.co/n8L1mBRw/Screenshot-2025-07-21-154407.png" alt="Inventory System Screenshot 16">
-            <div class="text">Screenshot 16</div>
+            <div class="numbertext">15 / 17</div>
+            <img src="https://i.ibb.co/pvcG9cDQ/Screenshot-2025-07-21-135837.png" alt="Inventory System Screenshot 15">
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">17 / 19</div>
-            <img src="https://i.ibb.co/pvcG9cDQ/Screenshot-2025-07-21-135837.png" alt="Inventory System Screenshot 17">
-            <div class="text">Screenshot 17</div>
+            <div class="numbertext">16 / 17</div>
+            <img src="https://i.ibb.co/jvtMK39v/Screenshot-2025-07-21-140544.png" alt="Inventory System Screenshot 16">
           </div>
 
           <div class="mySlides fade">
-            <div class="numbertext">18 / 19</div>
-            <img src="https://i.ibb.co/jvtMK39v/Screenshot-2025-07-21-140544.png" alt="Inventory System Screenshot 18">
-            <div class="text">Screenshot 18</div>
+            <div class="numbertext">17 / 17</div>
+            <img src="https://i.ibb.co/HLYCsF12/Screenshot-2025-07-21-142032.png" alt="Inventory System Screenshot 17">
           </div>
-
-          <div class="mySlides fade">
-            <div class="numbertext">19 / 19</div>
-            <img src="https://i.ibb.co/HLYCsF12/Screenshot-2025-07-21-142032.png" alt="Inventory System Screenshot 19">
-            <div class="text">Screenshot 19</div>
-          </div>
-
-          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-          <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        
+        <!-- New container for slideshow navigation buttons -->
+        <div class="slideshow-nav-controls">
+          <a class="prev" onclick="plusSlides(-1)">&#10094; Previous</a>
+          <a class="next" onclick="plusSlides(1)">Next &#10095;</a>
         </div>
         <br>
 

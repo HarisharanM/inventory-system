@@ -44,7 +44,8 @@
     }
 
     input[type="text"],
-    input[type="email"] {
+    input[type="email"],
+    input[type="tel"] { /* Added type="tel" for mobile number */
       width: 100%;
       padding: 12px;
       margin-top: 10px;
@@ -293,6 +294,7 @@
       <input type="text" name="business_name" placeholder="Company / Industry / Business Name *" required />
       <input type="text" name="user_name" placeholder="Your Name *" required />
       <input type="email" name="user_mail" placeholder="Your Email *" required />
+      <input type="tel" name="mobile_number" placeholder="Your Mobile Number *" required pattern="[0-9]{10}" title="Please enter a 10-digit mobile number" /> <!-- Added mobile number input -->
 
       <div class="checkbox-group">
         <input type="checkbox" id="demo_interest" name="demo_interest" />
@@ -388,12 +390,21 @@
       const businessName = form.business_name.value.trim();
       const userName = form.user_name.value.trim();
       const email = form.user_mail.value.trim();
+      const mobileNumber = form.mobile_number.value.trim(); // Get mobile number
       const wantsDemo = form.demo_interest.checked;
 
-      if (!businessName || !userName || !email) {
+      if (!businessName || !userName || !email || !mobileNumber) { // Validate mobile number
         showMessageBox("All required fields must be filled!", false);
         return; 
       }
+
+      // Basic mobile number validation (10 digits)
+      const mobileRegex = /^[0-9]{10}$/;
+      if (!mobileRegex.test(mobileNumber)) {
+        showMessageBox("Please enter a valid 10-digit mobile number.", false);
+        return;
+      }
+
 
       loaderBox.style.display = "block"; 
 
@@ -407,6 +418,7 @@
             businessName: businessName,
             userName: userName,
             email: email,
+            mobileNumber: mobileNumber, // Include mobile number in payload
             wantsDemo: wantsDemo
           })
         });
